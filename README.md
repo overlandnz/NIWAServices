@@ -10,6 +10,7 @@ C# API wrapper for NIWA's services
 
 `
 	var service = new TideService("YourAPIKey")
+	
 	var response = service.GetTides(-41.340963931789474, 174.74689594599624);
 `
 
