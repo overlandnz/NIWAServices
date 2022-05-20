@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>NIWAServices</id>
+        <version>1.0.2</version>
+        <title>NIWA Services</title>
+        <authors>dwnz</authors>
+        <owners>dwnz</owners>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <license type="expression">MIT</license>
+        <projectUrl>https://github.com/dwnz/NIWAServices/</projectUrl>
+        <description>C# API wrapper for NIWA's services</description>
+        <repository type="git" url="https://github.com/dwnz/NIWAServices" branch="main"/>
+    </metadata>
+</package>

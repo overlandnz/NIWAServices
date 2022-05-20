@@ -24,7 +24,7 @@ public class UVTests
     [Test]
     public async Task TestThatValidKeyReturnsData()
     {
-        UVService service = new UVService("1ecDca2au2UmP8ClbuNcG7TDfcyz6Wt8");
+        UVService service = new UVService("YOURKEY");
         var value = await service.Get(RedRocksLat, RedRocksLong);
 
         Assert.NotNull(value);
