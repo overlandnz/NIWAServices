@@ -1,23 +1,14 @@
-﻿using System.Net;
-using NIWAServices.Enums;
+﻿using NIWAServices.Enums;
 using NIWAServices.Models;
 using RestSharp;
 
 namespace NIWAServices;
 
-public class TideService
+public class TideService : BaseService
 {
-    private readonly RestClient _restClient;
-
     public TideService(string apiKey)
+        : base(apiKey)
     {
-        if (string.IsNullOrEmpty(apiKey))
-        {
-            throw new ArgumentException("API Key is required");
-        }
-
-        _restClient = new RestClient("https://api.niwa.co.nz/tides");
-        _restClient.AddDefaultHeader("x-apikey", apiKey);
     }
 
     /// <summary>
@@ -28,7 +19,7 @@ public class TideService
     /// <param name="days">Number of days, range (1-31), default: 7</param>
     /// <param name="startDate">Start date. Default: UTCNow</param>
     /// <param name="tidesDatum">LAT: Lowest astronomical tide; MSL: Mean sea level</param>
-    /// <returns></returns>
+    /// <returns><see cref="TidesResponse"/></returns>
     public async Task<TidesResponse> GetTides(
         double latitude,
         double longitude,
@@ -37,7 +28,7 @@ public class TideService
         NIWATidesDatum tidesDatum = NIWATidesDatum.LowestAstronomicalTide
     )
     {
-        RestRequest restRequest = new RestRequest("data");
+        RestRequest restRequest = new RestRequest("tides/data");
         restRequest.AddQueryParameter("lat", latitude);
         restRequest.AddQueryParameter("long", longitude);
         restRequest.AddQueryParameter("numberOfDays", days);
@@ -47,22 +38,7 @@ public class TideService
         {
             restRequest.AddQueryParameter("startDate", startDate.Value.ToString("yyyy-MM-dd"));
         }
-
-        RestResponse<TidesResponse> response = await _restClient.ExecuteAsync<TidesResponse>(restRequest);
-
-        switch (response.StatusCode)
-        {
-            case HttpStatusCode.OK:
-                return response.Data;
-
-            case HttpStatusCode.Unauthorized:
-                throw new UnauthorizedAccessException(response.ErrorMessage);
-
-            case HttpStatusCode.BadRequest:
-                throw new Exception("Bad request");
-
-            default:
-                throw new Exception(response.ErrorMessage);
-        }
+        
+        return ProcessResponse(await _restClient.ExecuteAsync<TidesResponse>(restRequest));
     }
 }
