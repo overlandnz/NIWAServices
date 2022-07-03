@@ -10,11 +10,11 @@ C# API wrapper for NIWA's services
 
 ## Install
 
-`Install-Package NIWAServices -Version 1.0.2`
+`Install-Package NIWAServices`
 
 or
 
-`dotnet add package NIWAServices --version 1.0.2`
+`dotnet add package NIWAServices`
 
 ## Tides
 
