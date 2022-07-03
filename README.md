@@ -8,6 +8,14 @@ C# API wrapper for NIWA's services
 * UV Index
 * CO2 Reading
 
+## Install
+
+`Install-Package NIWAServices -Version 1.0.2`
+
+or
+
+`dotnet add package NIWAServices --version 1.0.2`
+
 ## Tides
 
 ```
