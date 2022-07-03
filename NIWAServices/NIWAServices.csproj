@@ -4,6 +4,12 @@
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <Title>NIWA Services</Title>
+        <Authors>dwnz</Authors>
+        <PackageVersion>1.0.3</PackageVersion>
+        <Description>C# API wrapper for NIWA's services</Description>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <RepositoryUrl>https://github.com/dwnz/NIWAServices</RepositoryUrl>
     </PropertyGroup>
     
     <ItemGroup>
