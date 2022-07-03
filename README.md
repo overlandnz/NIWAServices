@@ -20,7 +20,7 @@ or
 
 ```
 var service = new TideService("YourAPIKey")
-var response = service.GetTides(-41.340963931789474, 174.74689594599624);
+var response = await service.GetTides(-41.340963931789474, 174.74689594599624);
 ```
 
 ## UV Index
