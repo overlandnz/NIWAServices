@@ -1,5 +1,6 @@
 using System.Net;
 using RestSharp;
+using System.Text.Json;
 
 namespace NIWAServices;
 
@@ -32,7 +33,16 @@ public partial class BaseService
                 throw new Exception("Bad request");
 
             default:
-                throw new Exception(response.ErrorMessage);
+                var errorDetails = new
+                {
+                    StatusCode = response.StatusCode,
+                    StatusDescription = response.StatusDescription,
+                    ErrorMessage = response.ErrorMessage,
+                    Content = response.Content,
+                    RequestUrl = response.Request?.Resource,
+                    RequestMethod = response.Request?.Method
+                };
+                throw new Exception($"API request failed: {JsonSerializer.Serialize(errorDetails)}");
         }
     }
 }

@@ -1,0 +1,64 @@
+name: Publish NuGet Package
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '6.0.x'
+
+      - name: Get current version
+        id: get_version
+        run: |
+          VERSION_LINE=$(grep '<PackageVersion>' NIWAServices/NIWAServices.csproj)
+          VERSION=$(echo $VERSION_LINE | sed -E 's/.*<PackageVersion>([0-9]+\.[0-9]+\.[0-9]+)<\/PackageVersion>.*/\1/')
+          echo "Current version: $VERSION"
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Bump patch version
+        id: bump_version
+        run: |
+          OLD_VERSION=${{ steps.get_version.outputs.version }}
+          IFS='.' read -r MAJOR MINOR PATCH <<< "$OLD_VERSION"
+          NEW_PATCH=$((PATCH + 1))
+          NEW_VERSION="$MAJOR.$MINOR.$NEW_PATCH"
+          echo "Bumping version: $OLD_VERSION -> $NEW_VERSION"
+          sed -i.bak "s/<PackageVersion>$OLD_VERSION<\/PackageVersion>/<PackageVersion>$NEW_VERSION<\/PackageVersion>/" NIWAServices/NIWAServices.csproj
+          echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Commit version bump
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add NIWAServices/NIWAServices.csproj
+          git commit -m "ci: bump version to ${{ steps.bump_version.outputs.new_version }}" || echo "No changes to commit"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+
+      - name: Run tests
+        run: dotnet test --no-restore --verbosity normal
+
+      - name: Pack NuGet package
+        run: dotnet pack NIWAServices/NIWAServices.csproj --configuration Release --no-build --output ./nupkg
+
+      - name: Publish to NuGet
+        run: dotnet nuget push ./nupkg/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate 
