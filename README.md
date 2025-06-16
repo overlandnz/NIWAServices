@@ -42,3 +42,4 @@ Supports most of the parameters listed here https://developer.niwa.co.nz/docs/ti
 ## Tests
 
 Has some unit tests - update with your API key before use
+
