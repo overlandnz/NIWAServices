@@ -5,7 +5,7 @@
         <Nullable>enable</Nullable>
         <Title>NIWA Services</Title>
         <Authors>dwnz</Authors>
-        <PackageVersion>1.0.6</PackageVersion>
+        <PackageVersion>1.0.7</PackageVersion>
         <Description>C# API wrapper for NIWA's services</Description>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <RepositoryUrl>https://github.com/dwnz/NIWAServices</RepositoryUrl>
