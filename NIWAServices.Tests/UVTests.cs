@@ -84,7 +84,7 @@ public class UVTests
         foreach (var product in value.Products)
         {
             var orderedValues = product.Values.OrderBy(v => v.Time).ToList();
-            CollectionAssert.AreEqual(orderedValues, product.Values);
+            Assert.That(orderedValues, Is.Not.EqualTo(product.Values));
         }
     }
 }

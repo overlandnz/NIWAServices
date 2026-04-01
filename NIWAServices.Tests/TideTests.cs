@@ -105,6 +105,6 @@ public class TideTests
         Assert.IsNotEmpty(value.Values);
 
         var orderedValues = value.Values.OrderBy(v => v.Time).ToList();
-        CollectionAssert.AreEqual(orderedValues, value.Values);
+        Assert.That(value.Values, Is.EqualTo(orderedValues));
     }
 }

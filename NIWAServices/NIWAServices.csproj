@@ -5,15 +5,15 @@
         <Nullable>enable</Nullable>
         <Title>NIWA Services</Title>
         <Authors>dwnz</Authors>
-        <PackageVersion>1.0.8</PackageVersion>
+        <PackageVersion>1.0.9</PackageVersion>
         <Description>C# API wrapper for NIWA's services</Description>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <RepositoryUrl>https://github.com/dwnz/NIWAServices</RepositoryUrl>
-        <TargetFrameworks>net6.0;net7.0;net8.0</TargetFrameworks>
+        <TargetFrameworks>net6.0;net8.0;net10.0</TargetFrameworks>
     </PropertyGroup>
     
     <ItemGroup>
-      <PackageReference Include="RestSharp" Version="110.2.0" />
+      <PackageReference Include="RestSharp" Version="114.0.0" />
     </ItemGroup>
 
 </Project>
